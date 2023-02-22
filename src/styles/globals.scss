@@ -1,0 +1,69 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*,
+*::after,
+*::before {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+:root {
+	--main-900: #181c21;
+	--main-800: #20262c;
+	--main-700: #292f38;
+	--main-600: #313943;
+	--main-500: #39434e;
+	--main-200: #525f70;
+
+	--complimentary-900: #008a58;
+	--complimentary-800: #009e64;
+	--complimentary-700: #00b171;
+	--complimentary-600: #00c57d;
+	--complimentary-500: #00d88a;
+	--complimentary-200: #00ec96;
+
+	--secondary-800: #1cbace;
+	--secondary-700: #1ecadf;
+	--secondary-600: #2fcee3;
+	--secondary-500: #40d2e5;
+	--secondary-200: #51d6e7;
+}
+
+html,
+body,
+#__next {
+	width: 100%;
+	height: 100%;
+}
+
+html {
+	line-height: 1.3rem;
+	overflow-x: hidden;
+	letter-spacing: 0.05rem;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+	tab-size: 2;
+	font-weight: 375;
+	letter-spacing: -0.005em;
+	scroll-behavior: smooth;
+}
+
+body {
+	@apply bg-main-900;
+}
+
+a {
+	appearance: none;
+	text-decoration: none;
+	outline: none;
+}
+
+input,
+button {
+	outline: none;
+	appearance: none;
+}
