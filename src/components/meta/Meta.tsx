@@ -5,7 +5,7 @@ import { IMeta } from './Meta.interface'
 
 const Meta: FC<PropsWithChildren<IMeta>> = ({
 	title,
-	description = 'conveniently convert any currency at any time',
+	description = 'search for any game',
 	image,
 	type = 'website',
 	children

@@ -1,0 +1,13 @@
+.thumb_container {
+	@apply overflow-hidden rounded-md;
+	max-width: 2.5rem;
+	max-height: 2.5rem;
+
+	> img {
+		@apply aspect-video h-full w-full object-fill;
+	}
+
+	> svg {
+		@apply h-6 w-6;
+	}
+}

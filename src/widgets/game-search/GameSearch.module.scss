@@ -1,0 +1,10 @@
+.container {
+	@apply flex h-full w-full items-center justify-center;
+
+	.wrapper {
+		@apply flex flex-col gap-5;
+		> h1 {
+			@apply text-2xl font-bold text-white;
+		}
+	}
+}

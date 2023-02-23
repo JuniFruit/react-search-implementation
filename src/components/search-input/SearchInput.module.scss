@@ -1,0 +1,18 @@
+.input_container {
+	@apply flex h-12 items-center gap-2 overflow-hidden rounded-full bg-white py-0.5 px-2 transition-shadow duration-200;
+	> input {
+		@apply bg-white p-1;
+	}
+
+	> svg {
+		@apply h-6 w-6 text-main-700;
+	}
+
+	&:focus,
+	&:focus-within {
+		@apply rounded-t-3xl rounded-b-none shadow outline-none;
+	}
+	@media (hover: hover) {
+		@apply hover:shadow;
+	}
+}

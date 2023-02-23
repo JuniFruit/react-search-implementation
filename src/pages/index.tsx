@@ -1,7 +1,12 @@
+import GameSearch from '@/widgets/game-search/GameSearch'
 import { NextPage } from 'next'
 
 const HomePage: NextPage = () => {
-	return <h1>hello</h1>
+	return (
+		<>
+			<GameSearch />
+		</>
+	)
 }
 
 export default HomePage
