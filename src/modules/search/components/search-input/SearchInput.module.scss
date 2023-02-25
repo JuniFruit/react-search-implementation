@@ -10,9 +10,16 @@
 
 	&:focus,
 	&:focus-within {
-		@apply rounded-t-3xl rounded-b-none shadow outline-none;
+		@apply outline-none;
+		box-shadow: 0.25rem 0.15rem 0.2rem 0 rgba(0, 0, 0, 0.3);
 	}
 	@media (hover: hover) {
-		@apply hover:shadow;
+		&:hover {
+			box-shadow: 0.25rem 0.15rem 0.2rem 0 rgba(0, 0, 0, 0.3);
+		}
 	}
+}
+
+.border_transformed {
+	@apply rounded-t-3xl rounded-b-none;
 }

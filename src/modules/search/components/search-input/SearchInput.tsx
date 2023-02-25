@@ -4,7 +4,12 @@ import { IoSearchOutline } from 'react-icons/io5'
 import { ISearchInput } from './SearchInput.interface'
 import styles from './SearchInput.module.scss'
 
-const SearchInput: FC<ISearchInput> = ({ onChange, onClick, onSubmit }) => {
+const SearchInput: FC<ISearchInput> = ({
+	onChange,
+	onClick,
+	onSubmit,
+	isResultsShowing
+}) => {
 	const handleClick: MouseEventHandler<HTMLInputElement> = e => {
 		e.preventDefault()
 		onClick((e.target as HTMLInputElement).value)
@@ -15,7 +20,12 @@ const SearchInput: FC<ISearchInput> = ({ onChange, onClick, onSubmit }) => {
 	}
 
 	return (
-		<div className={styles.input_container} tabIndex={0}>
+		<div
+			className={`${styles.input_container} ${
+				isResultsShowing ? styles.border_transformed : ''
+			}`}
+			tabIndex={0}
+		>
 			<IoSearchOutline />
 			<Field
 				type='text'

@@ -1,12 +1,16 @@
 import Layout from '@/modules/layout/Layout'
+import { store } from '@/store/store'
 import '@/styles/globals.scss'
 import type { AppProps } from 'next/app'
+import { Provider } from 'react-redux'
 
 const App = ({ Component, pageProps }: AppProps) => {
 	return (
-		<Layout title='Search-app'>
-			<Component {...pageProps} />
-		</Layout>
+		<Provider store={store}>
+			<Layout title='Search-app'>
+				<Component {...pageProps} />
+			</Layout>
+		</Provider>
 	)
 }
 

@@ -1,4 +1,4 @@
-import { IResultItem } from '@/components/search-results/Results.interface'
+import { IResultItem } from '@/modules/search/components/search-results/Results.interface'
 
 export interface ISearch<T> {
 	onGoTo: (link: string) => void

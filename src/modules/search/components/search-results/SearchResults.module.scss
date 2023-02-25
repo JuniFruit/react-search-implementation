@@ -1,0 +1,5 @@
+.result_container {
+	@apply absolute left-0 top-full w-full overflow-x-hidden rounded-b-3xl bg-white py-2;
+	box-shadow: 0.25rem 0.15rem 0.2rem 0 rgba(0, 0, 0, 0.3);
+	// min-height: 18rem;
+}

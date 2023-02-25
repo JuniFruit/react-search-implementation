@@ -1,7 +1,9 @@
 export interface IGameListResponse {
-	count: number
-	next: string
-	results: IGameListItem[]
+	data: {
+		count: number
+		next: string
+		results: IGameListItem[]
+	}
 }
 export interface IGameListItem {
 	id: number
