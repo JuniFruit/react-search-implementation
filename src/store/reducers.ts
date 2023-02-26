@@ -1,5 +1,5 @@
 import { combineReducers } from '@reduxjs/toolkit'
-import { gameSearchSlice } from '@/widgets/game-search/store/gameSearchSlice'
+import { gameSearchSlice } from '@/modules/search/store/gameSearchSlice'
 
 const rootReducer = combineReducers({
 	gameSearch: gameSearchSlice.reducer

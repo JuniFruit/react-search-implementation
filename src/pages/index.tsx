@@ -1,4 +1,4 @@
-import GameSearch from '@/widgets/game-search/GameSearch'
+import GameSearch from '@/modules/search/GameSearch'
 import { NextPage } from 'next'
 
 const HomePage: NextPage = () => {

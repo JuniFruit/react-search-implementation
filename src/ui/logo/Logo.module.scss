@@ -1,0 +1,18 @@
+.logo {
+	@apply p-1 font-semibold text-main-200;
+	font-size: 0.85rem;
+	> span {
+		@apply mx-1;
+	}
+	> span:first-child {
+		@apply text-secondary-200;
+	}
+
+	@screen sm {
+		@apply text-sm;
+	}
+
+	@screen md {
+		@apply text-base;
+	}
+}

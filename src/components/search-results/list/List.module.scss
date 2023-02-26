@@ -11,6 +11,9 @@
 	.button_container {
 		@apply absolute top-1/2 right-5;
 		transform: translateY(-50%);
+		.clear_button {
+			@apply bg-transparent font-thin text-main-700 hover:underline;
+		}
 	}
 
 	@media (hover: hover) {

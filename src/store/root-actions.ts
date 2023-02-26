@@ -1,4 +1,4 @@
-import gameSearchActions from '@/widgets/game-search/store/gameSearchSlice'
+import gameSearchActions from '@/modules/search/store/gameSearchSlice'
 
 export const rootActions = {
 	...gameSearchActions

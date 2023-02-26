@@ -2,23 +2,22 @@ import { createSlice } from '@reduxjs/toolkit'
 import { IGameListItem } from '@/types/rawgList.interface'
 
 interface IinitialState {
-	term: IGameListItem[]
+	latest: IGameListItem[]
 }
 
 const initialState: IinitialState = {
-	term: []
+	latest: []
 }
 
 export const gameSearchSlice = createSlice({
 	name: 'gameSearch',
 	initialState,
 	reducers: {
-		addToCache: (state, { payload }) => {
-			console.log(payload)
-			let copy: any = { ...state }
-
-			copy[payload.searchTerm] = payload.results
-			return copy
+		storeResults: (state, { payload }) => {
+			return {
+				...state,
+				latest: payload.results
+			}
 		}
 	}
 })

@@ -1,5 +1,5 @@
 .main {
-	@apply relative rounded-md bg-complimentary-500  p-2 text-sm text-white opacity-80 transition-colors duration-150;
+	@apply relative rounded-md bg-complimentary-500  p-2 text-sm text-white opacity-80 transition-all duration-150;
 	letter-spacing: 0.05rem;
 	> div:last-child {
 		@apply pointer-events-none absolute opacity-0;

@@ -1,3 +1,4 @@
+import Header from '@/components/header/Header'
 import Meta from '@/components/meta/Meta'
 import { IMeta } from '@/components/meta/Meta.interface'
 import Toast from '@/components/toast/Toast'
@@ -10,6 +11,7 @@ const Layout: FC<PropsWithChildren<ILayout>> = ({ children, ...rest }) => {
 	return (
 		<>
 			<Meta {...{ ...rest }} />
+			<Header />
 			<div className={styles.page_wrapper}>
 				<main>{children}</main>
 				{/* <Toast /> */}
