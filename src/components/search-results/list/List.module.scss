@@ -19,4 +19,10 @@
 	@media (hover: hover) {
 		@apply hover:bg-gray-200;
 	}
+
+	&:focus,
+	&:focus-visible,
+	&:focus-within {
+		@apply bg-gray-200 outline-none;
+	}
 }

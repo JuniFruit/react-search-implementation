@@ -6,23 +6,36 @@ import {
 	useRef,
 	useState
 } from 'react'
-import { useSeachCache } from './utils-hooks/useSearchCache'
 import { ISearch, ISearchResult } from './Search.interface'
+import { useIsMobile } from './utils-hooks/useIsMobile'
+import { useSeachCache } from './utils-hooks/useSearchCache'
+
+//TODO disable autocomplete inline on mobile
+//TODO outsource caching functions
 
 export function useSearch<T extends ISearchResult>({
 	onGoTo,
 	onSearch,
 	delay = 200,
+	isArrowsActive = true,
 	isAutocompleteInline = true,
 	maxCachedQueries = 15
 }: ISearch<T>) {
+	const { isMobile } = useIsMobile()
 	const [results, setResults] = useState<T[]>([])
 	const [searchTerm, setSearchTerm] = useState('')
 	const [autocomplete, setAutocomplete] = useState<string>('')
 	const [suggestions, setSuggestions] = useState<string[]>([])
+	const [status, setStatus] = useState({
+		isLoading: false,
+		isError: false,
+		isSuccess: false,
+		errorMsg: ''
+	})
 	const { addToCache, retrieveFromCache } = useSeachCache<T[]>()
 	const debounced = useDebounce(searchTerm, delay)
 	const inputRef = useRef<HTMLInputElement>(null)
+	const resultsRef = useRef<HTMLUListElement | HTMLOListElement>(null)
 
 	const handleInputClick = useCallback((value: string) => {
 		_handleSuggestion(value)
@@ -33,6 +46,27 @@ export function useSearch<T extends ISearchResult>({
 		if (!query) return
 		_cacheQuery(query)
 		onGoTo(query)
+	}, [])
+
+	const handleArrowPress = useCallback((e: any) => {
+		if (!resultsRef.current) return
+		const resNodes = Array.from(resultsRef.current.children)
+		if (!resNodes.length) return
+		let activeInd = resNodes.findIndex(item => item === document.activeElement)
+
+		if (e.code === 'ArrowDown') {
+			e.preventDefault()
+			activeInd++
+		}
+		if (e.code === 'ArrowUp') {
+			e.preventDefault()
+
+			if (activeInd < 0) activeInd = resNodes.length
+			activeInd--
+		}
+		resNodes[activeInd]
+			? (resNodes[activeInd] as HTMLElement).focus()
+			: inputRef.current?.focus()
 	}, [])
 
 	const handleChange: ChangeEventHandler<HTMLInputElement> = useCallback(e => {
@@ -55,6 +89,7 @@ export function useSearch<T extends ISearchResult>({
 
 	const _cacheQuery = useCallback((query: string) => {
 		let queries = _retrieveQueries()
+		if (queries.find(q => q === query)) return
 		queries = [query, ...queries]
 		if (queries.length > maxCachedQueries) queries.pop()
 		window.localStorage.setItem('user_queries', JSON.stringify(queries))
@@ -100,15 +135,42 @@ export function useSearch<T extends ISearchResult>({
 	)
 
 	const _handleSearch = useCallback(async () => {
-		const res = await onSearch(searchTerm)
+		try {
+			setStatus(prev => ({
+				...prev,
+				isLoading: true
+			}))
+			const res = await onSearch(searchTerm)
 
-		setResults(prev => [...res])
-		addToCache(searchTerm, res)
+			setResults([...res])
+			addToCache(searchTerm, res)
+			setStatus(prev => ({
+				isError: false,
+				isLoading: false,
+				isSuccess: true,
+				errorMsg: ''
+			}))
+		} catch (error: any) {
+			setStatus(prev => ({
+				isError: true,
+				isLoading: false,
+				isSuccess: false,
+				errorMsg: error.message
+			}))
+		}
 	}, [searchTerm])
 
 	useEffect(() => {
-		const cached = retrieveFromCache(searchTerm)
+		if (!isArrowsActive) return
+		document.body.addEventListener('keydown', handleArrowPress)
 
+		return () => {
+			document.body.removeEventListener('keydown', handleArrowPress)
+		}
+	}, [])
+
+	useEffect(() => {
+		const cached = retrieveFromCache(searchTerm)
 		if (cached !== undefined && cached.length !== 0)
 			return setResults([...cached])
 
@@ -117,7 +179,7 @@ export function useSearch<T extends ISearchResult>({
 	}, [debounced])
 
 	useEffect(() => {
-		if (!debounced || !isAutocompleteInline) return
+		if (!debounced || !isAutocompleteInline || isMobile) return
 		_handleInlineAutocomplete(searchTerm)
 	}, [_handleInlineAutocomplete])
 
@@ -132,9 +194,11 @@ export function useSearch<T extends ISearchResult>({
 			handleInputClick,
 			handleDeleteCached
 		},
+		status,
 		results,
 		searchTerm: `${searchTerm}${autocomplete}`,
 		inputRef,
+		resultsRef,
 		suggestions
 	}
 }

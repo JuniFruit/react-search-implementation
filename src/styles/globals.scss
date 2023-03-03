@@ -11,12 +11,12 @@
 }
 
 :root {
-	--main-900: #181c21;
-	--main-800: #20262c;
-	--main-700: #292f38;
-	--main-600: #313943;
-	--main-500: #39434e;
-	--main-200: #525f70;
+	--main-900: #151515;
+	--main-800: #1f1f1f;
+	--main-700: #292929;
+	--main-600: #323232;
+	--main-500: #3c3c3c;
+	--main-200: #464646;
 
 	--complimentary-900: #008a58;
 	--complimentary-800: #009e64;
@@ -53,7 +53,7 @@ html {
 }
 
 body {
-	@apply bg-main-500;
+	@apply bg-main-900;
 }
 
 a {

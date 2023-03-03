@@ -1,4 +1,4 @@
-import { ChangeEvent } from 'react'
+import { ChangeEvent, KeyboardEvent } from 'react'
 
 export interface ISearchInput {
 	onChange: (e: ChangeEvent<HTMLInputElement>) => void

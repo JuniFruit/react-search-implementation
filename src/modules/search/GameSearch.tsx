@@ -1,22 +1,22 @@
 import SearchInput from '@/components/search-input/SearchInput'
 import ResultList from '@/components/search-results/list/ResultList'
 import SearchResultsWrapper from '@/components/search-results/SearchResults'
-import { useClickOutside } from '@/hooks/useClickOutside'
 import { useSearch } from '@/hooks/search/useSearch'
+import { useActions } from '@/hooks/useActions'
+import { useClickOutside } from '@/hooks/useClickOutside'
 import { IGameListItem } from '@/types/rawgList.interface'
+import { useRouter } from 'next/router'
 import { FC, useCallback } from 'react'
 import styles from './GameSearch.module.scss'
-import { RawgService } from './services/rawg.service'
+import { RawgService } from '../../services/rawg.service'
 import { transformResponse } from './utils/transformResponse'
-import { useActions } from '@/hooks/useActions'
-import { useRouter } from 'next/router'
 
 const GameSearch: FC = () => {
 	const { storeResults } = useActions()
 	const router = useRouter()
 
 	const handleGoTo = useCallback((query = '') => {
-		router.push('/search_results')
+		router.push(`/search_results?q=${query}`)
 	}, [])
 	const handleOnSearch = useCallback(async (searchTerm?: string) => {
 		const res = await RawgService.getGameList(searchTerm)
@@ -25,11 +25,18 @@ const GameSearch: FC = () => {
 	}, [])
 
 	const { isShow, ref, setIsShow } = useClickOutside(false)
-	const { handlers, results, searchTerm, inputRef, suggestions } =
-		useSearch<IGameListItem>({
-			onSearch: handleOnSearch,
-			onGoTo: handleGoTo
-		})
+	const {
+		handlers,
+		results,
+		searchTerm,
+		inputRef,
+		resultsRef,
+		suggestions,
+		status
+	} = useSearch<IGameListItem>({
+		onSearch: handleOnSearch,
+		onGoTo: handleGoTo
+	})
 
 	return (
 		<section className={styles.container}>
@@ -55,6 +62,7 @@ const GameSearch: FC = () => {
 								onItemClick={handlers.handleGoTo}
 								suggestions={suggestions}
 								onItemDelete={handlers.handleDeleteCached}
+								ref={resultsRef}
 							/>
 						</SearchResultsWrapper>
 					) : null}

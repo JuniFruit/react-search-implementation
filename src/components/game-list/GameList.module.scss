@@ -1,0 +1,35 @@
+.container {
+	@apply flex flex-col gap-5;
+
+	.img_container {
+		@apply overflow-hidden rounded-md;
+		width: 13rem;
+		@screen sm {
+			min-width: 13rem;
+		}
+		@screen md {
+			width: 45rem;
+		}
+	}
+
+	.content_wrapper {
+		@apply flex flex-col gap-5 text-white;
+
+		.head_content {
+			@apply flex flex-col gap-3;
+			> h2 {
+				@apply text-2xl font-bold leading-8;
+			}
+			> p {
+				@apply text-base font-semibold;
+			}
+		}
+
+		.body_content {
+		}
+	}
+
+	@screen sm {
+		@apply flex-row;
+	}
+}

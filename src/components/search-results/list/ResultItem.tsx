@@ -1,9 +1,9 @@
 import { Button } from '@/ui/button/Button'
 import Image from '@/ui/image/Image'
 import ThumbnailTiny from '@/ui/image/thumb/ThumbnailTiny'
-import { FC, LiHTMLAttributes, MouseEventHandler, useCallback } from 'react'
+import { FC, MouseEventHandler, useCallback } from 'react'
 import { IoSearchCircleOutline } from 'react-icons/io5'
-import { IResultItem, IResultItemComponent } from '../Results.interface'
+import { IResultItemComponent } from '../Results.interface'
 import styles from './List.module.scss'
 
 const ResultItem: FC<IResultItemComponent> = ({
@@ -24,7 +24,7 @@ const ResultItem: FC<IResultItemComponent> = ({
 	)
 
 	return (
-		<li className={styles.item} {...{ ...rest }}>
+		<li className={styles.item} {...{ ...rest }} tabIndex={0}>
 			<ThumbnailTiny>
 				{thumbnail ? <Image src={thumbnail} /> : <IoSearchCircleOutline />}
 			</ThumbnailTiny>
