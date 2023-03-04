@@ -4,39 +4,34 @@ import SearchResultsWrapper from '@/components/search-results/SearchResults'
 import { useSearch } from '@/hooks/search/useSearch'
 import { useActions } from '@/hooks/useActions'
 import { useClickOutside } from '@/hooks/useClickOutside'
+import { useGetGames } from '@/hooks/useGetGames'
 import { IGameListItem } from '@/types/rawgList.interface'
 import { useRouter } from 'next/router'
 import { FC, useCallback } from 'react'
-import styles from './GameSearch.module.scss'
 import { RawgService } from '../../services/rawg.service'
+import styles from './GameSearch.module.scss'
 import { transformResponse } from './utils/transformResponse'
 
 const GameSearch: FC = () => {
 	const { storeResults } = useActions()
 	const router = useRouter()
-
-	const handleGoTo = useCallback((query = '') => {
+	const { fetchGames } = useGetGames()
+	const handleGoTo = useCallback(async (query = '') => {
 		router.push(`/search_results?q=${query}`)
 	}, [])
-	const handleOnSearch = useCallback(async (searchTerm?: string) => {
+
+	const handleOnSearch = useCallback(async (searchTerm = '') => {
 		const res = await RawgService.getGameList(searchTerm)
-		storeResults({ results: res.data.results })
+		storeResults({ results: res.data.results, query: searchTerm })
 		return res.data.results
 	}, [])
 
 	const { isShow, ref, setIsShow } = useClickOutside(false)
-	const {
-		handlers,
-		results,
-		searchTerm,
-		inputRef,
-		resultsRef,
-		suggestions,
-		status
-	} = useSearch<IGameListItem>({
-		onSearch: handleOnSearch,
-		onGoTo: handleGoTo
-	})
+	const { handlers, results, searchTerm, inputRef, resultsRef, suggestions } =
+		useSearch<IGameListItem>({
+			onSearch: handleOnSearch,
+			onGoTo: handleGoTo
+		})
 
 	return (
 		<section className={styles.container}>

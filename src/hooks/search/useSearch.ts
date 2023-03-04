@@ -10,9 +10,6 @@ import { ISearch, ISearchResult } from './Search.interface'
 import { useIsMobile } from './utils-hooks/useIsMobile'
 import { useSeachCache } from './utils-hooks/useSearchCache'
 
-//TODO disable autocomplete inline on mobile
-//TODO outsource caching functions
-
 export function useSearch<T extends ISearchResult>({
 	onGoTo,
 	onSearch,
@@ -26,12 +23,7 @@ export function useSearch<T extends ISearchResult>({
 	const [searchTerm, setSearchTerm] = useState('')
 	const [autocomplete, setAutocomplete] = useState<string>('')
 	const [suggestions, setSuggestions] = useState<string[]>([])
-	const [status, setStatus] = useState({
-		isLoading: false,
-		isError: false,
-		isSuccess: false,
-		errorMsg: ''
-	})
+
 	const { addToCache, retrieveFromCache } = useSeachCache<T[]>()
 	const debounced = useDebounce(searchTerm, delay)
 	const inputRef = useRef<HTMLInputElement>(null)
@@ -136,28 +128,11 @@ export function useSearch<T extends ISearchResult>({
 
 	const _handleSearch = useCallback(async () => {
 		try {
-			setStatus(prev => ({
-				...prev,
-				isLoading: true
-			}))
 			const res = await onSearch(searchTerm)
 
 			setResults([...res])
 			addToCache(searchTerm, res)
-			setStatus(prev => ({
-				isError: false,
-				isLoading: false,
-				isSuccess: true,
-				errorMsg: ''
-			}))
-		} catch (error: any) {
-			setStatus(prev => ({
-				isError: true,
-				isLoading: false,
-				isSuccess: false,
-				errorMsg: error.message
-			}))
-		}
+		} catch (error) {}
 	}, [searchTerm])
 
 	useEffect(() => {
@@ -194,7 +169,6 @@ export function useSearch<T extends ISearchResult>({
 			handleInputClick,
 			handleDeleteCached
 		},
-		status,
 		results,
 		searchTerm: `${searchTerm}${autocomplete}`,
 		inputRef,
