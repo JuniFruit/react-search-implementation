@@ -14,7 +14,11 @@ export const useGetGames = () => {
 		setIsLoading(true)
 		RawgService.getGameList(q, page_size, nextPage)
 			.then(res => {
-				storeResults({ results: res.data.results, query: q })
+				storeResults({
+					results: res.data.results,
+					query: q,
+					next: nextPage + 1
+				})
 			})
 			.catch(e => {
 				setIsError(true)

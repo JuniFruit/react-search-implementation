@@ -3,15 +3,17 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 interface IUseInfiniteScroll {
 	onRequestNext: (currPage: number) => any
 	isLoading: boolean
+	startPage: number
 	options?: IntersectionObserverInit
 }
 
 export const useInfiniteScroll = ({
 	onRequestNext,
 	isLoading,
+	startPage,
 	options = {}
 }: IUseInfiniteScroll) => {
-	const [currPage, setCurrPage] = useState(1)
+	const [currPage, setCurrPage] = useState<number>(startPage)
 	const lastElRef = useRef<HTMLElement>(null)
 
 	const fetchNext = useCallback(() => {

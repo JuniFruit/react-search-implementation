@@ -1,9 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { IGameListItem } from '@/types/rawgList.interface'
+import { noDuplicates } from '../utils/general'
 
 export interface IGameSliceState {
 	queries: {
-		[query: string]: number[]
+		[query: string]: {
+			ids: number[]
+			next: number | null
+		}
 	}
 	resultsById: {
 		[id: string]: IGameListItem
@@ -12,6 +16,7 @@ export interface IGameSliceState {
 
 interface IGameSearchPayload {
 	query: string
+	next: number | null
 	results: IGameListItem[]
 }
 
@@ -38,14 +43,18 @@ export const gameSearchSlice = createSlice({
 				;(results as any)[item.id] = { ...item }
 			})
 
+			const idsArr = noDuplicates([
+				...(state.queries[query]?.ids || []),
+				...payload.results.map(item => item.id)
+			])
 			// Normalized data
 			return {
 				queries: {
 					...state.queries,
-					[query]: [
-						...(state.queries[query] || []),
-						...payload.results.map(item => item.id)
-					]
+					[query]: {
+						ids: idsArr,
+						next: payload.next
+					}
 				},
 				resultsById: {
 					...state.resultsById,

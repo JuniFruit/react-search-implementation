@@ -1,18 +1,14 @@
 import { IGameListItem } from '@/types/rawgList.interface'
 import Image from '@/ui/image/Image'
-import ThumbnailTiny from '@/ui/image/thumb/ThumbnailTiny'
 import { FC } from 'react'
 import styles from './GameInfo.module.scss'
 
 const GameInfo: FC<IGameListItem> = ({
-	id,
 	background_image,
 	platforms = [],
 	rating,
-	name,
-	playtime
+	name
 }) => {
-	console.log(platforms)
 	return (
 		<section className={styles.container}>
 			<div className={styles.img_container}>
@@ -42,7 +38,7 @@ const GameInfo: FC<IGameListItem> = ({
 						<h2>Platforms</h2>
 						<div>
 							{platforms.map(platform => (
-								<div className={styles.platform}>
+								<div className={styles.platform} key={platform.platform.id}>
 									<div>
 										<p>{platform.platform.name}</p>
 										<p>{platform.released_at}</p>

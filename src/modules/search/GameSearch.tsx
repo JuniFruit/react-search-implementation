@@ -20,7 +20,7 @@ const GameSearch: FC = () => {
 
 	const handleOnSearch = useCallback(async (searchTerm = '') => {
 		const res = await RawgService.getGameList(searchTerm)
-		storeResults({ results: res.data.results, query: searchTerm })
+		storeResults({ results: res.data.results, query: searchTerm, next: 1 })
 		return res.data.results
 	}, [])
 
@@ -39,6 +39,7 @@ const GameSearch: FC = () => {
 					className={styles.search_container}
 					ref={ref}
 					onClick={() => setIsShow(true)}
+					onKeyDown={() => (!isShow ? setIsShow(true) : null)}
 				>
 					<SearchInput
 						onChange={handlers.handleChange}

@@ -13,8 +13,9 @@ const Games: FC = () => {
 	const router = useRouter()
 	const query = router.query.q as keyof IGameSliceState
 	const stored = useTypedSelector(
-		state => state.gameSearch.queries[query] || []
+		state => state.gameSearch.queries[query] || {}
 	)
+	const storedIds = stored.ids || []
 	const {
 		status: { isError, isLoading, errMsg },
 		fetchGames
@@ -25,11 +26,11 @@ const Games: FC = () => {
 	}
 
 	useEffect(() => {
-		if (!stored.length) fetchGames(query as string, 10, 1)
-	}, [])
+		if (!storedIds.length || !query) fetchGames(query as string, 10, 1)
+	}, [query])
 
 	useEffect(() => {
-		if (stored.length) {
+		if (storedIds.length) {
 			const scrollPosition = sessionStorage.getItem('scrollPosition')
 			if (scrollPosition) {
 				window.scrollTo(0, parseInt(scrollPosition, 10))
@@ -40,18 +41,20 @@ const Games: FC = () => {
 
 	const { lastElRef } = useInfiniteScroll({
 		onRequestNext: handleGetNext,
-		isLoading
+		isLoading,
+		startPage: stored.next || 1
 	})
+
 	return (
 		<section className={styles.wrapper}>
-			{stored.map((id, ind) => {
-				if (ind + 1 === stored.length)
+			{storedIds.map((id, ind) => {
+				if (ind + 1 === storedIds.length)
 					return <GameListItem ref={lastElRef} id={id} key={id} />
 				return <GameListItem id={id} key={id} />
 			})}
 			{isLoading ? <Spinner /> : null}
 			{isError ? <h2>{errMsg}</h2> : null}
-			{stored.length ? (
+			{storedIds.length ? (
 				<Button onClick={() => window.scrollTo(0, 0)}>Back to top</Button>
 			) : null}
 		</section>
