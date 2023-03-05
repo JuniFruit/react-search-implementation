@@ -3,17 +3,15 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 interface IUseInfiniteScroll {
 	onRequestNext: (currPage: number) => any
 	isLoading: boolean
-	fireOnMount?: boolean
 	options?: IntersectionObserverInit
 }
 
 export const useInfiniteScroll = ({
 	onRequestNext,
 	isLoading,
-	options = {},
-	fireOnMount = false
+	options = {}
 }: IUseInfiniteScroll) => {
-	const [currPage, setCurrPage] = useState(0)
+	const [currPage, setCurrPage] = useState(1)
 	const lastElRef = useRef<HTMLElement>(null)
 
 	const fetchNext = useCallback(() => {
@@ -36,11 +34,7 @@ export const useInfiniteScroll = ({
 		return () => {
 			observer.disconnect()
 		}
-	}, [lastElRef.current, currPage, isLoading])
-
-	useEffect(() => {
-		if (fireOnMount) fetchNext()
-	}, [])
+	}, [lastElRef.current, currPage])
 
 	return {
 		lastElRef

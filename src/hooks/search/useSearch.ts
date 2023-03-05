@@ -96,7 +96,7 @@ export function useSearch<T extends ISearchResult>({
 				return temp.toLowerCase() === searchQuery.toLowerCase()
 			})
 			if (!query) return
-			const sliced = query.slice(searchQuery.length, -1) || ''
+			const sliced = query.slice(searchQuery.length) || ''
 			if (searchQuery.length === 0 || searchQuery.length > 1) return
 			setAutocomplete(sliced)
 		},

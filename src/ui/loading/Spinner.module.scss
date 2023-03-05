@@ -3,5 +3,5 @@
 .container {
 	@apply absolute top-1/2 left-1/2;
 	transform: translate(-50%, -50%);
-	@include on-circle-loading(11, 1.5, orange);
+	@include on-circle-loading(11, 1.5, var(--complimentary-200));
 }

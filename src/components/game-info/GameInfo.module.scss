@@ -1,5 +1,5 @@
 .container {
-	@apply flex flex-col gap-5;
+	@apply flex flex-col gap-5 py-2 px-4;
 
 	.img_container {
 		@apply overflow-hidden rounded-md;
@@ -26,11 +26,22 @@
 		}
 
 		.body_content {
-		}
-	}
+			@apply flex flex-col gap-2 text-white;
+			.platforms_wrapper {
+				> h2 {
+					@apply my-2 text-xl font-bold;
+				}
 
-	@media (hover: hover) {
-		@apply hover:opacity-70;
+				> div {
+					@apply flex  flex-wrap gap-2;
+					.platform {
+						> div > p {
+							@apply my-1;
+						}
+					}
+				}
+			}
+		}
 	}
 
 	@screen sm {

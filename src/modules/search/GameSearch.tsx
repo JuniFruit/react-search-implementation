@@ -4,7 +4,6 @@ import SearchResultsWrapper from '@/components/search-results/SearchResults'
 import { useSearch } from '@/hooks/search/useSearch'
 import { useActions } from '@/hooks/useActions'
 import { useClickOutside } from '@/hooks/useClickOutside'
-import { useGetGames } from '@/hooks/useGetGames'
 import { IGameListItem } from '@/types/rawgList.interface'
 import { useRouter } from 'next/router'
 import { FC, useCallback } from 'react'
@@ -15,7 +14,6 @@ import { transformResponse } from './utils/transformResponse'
 const GameSearch: FC = () => {
 	const { storeResults } = useActions()
 	const router = useRouter()
-	const { fetchGames } = useGetGames()
 	const handleGoTo = useCallback(async (query = '') => {
 		router.push(`/search_results?q=${query}`)
 	}, [])

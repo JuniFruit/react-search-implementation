@@ -2,16 +2,11 @@ import { createSlice } from '@reduxjs/toolkit'
 import { IGameListItem } from '@/types/rawgList.interface'
 
 export interface IGameSliceState {
-	query: {
-		resultsIds: number[]
-		id: IGameListItem | {}
+	queries: {
+		[query: string]: number[]
 	}
-}
-
-const initialState: IGameSliceState = {
-	query: {
-		resultsIds: [],
-		id: {}
+	resultsById: {
+		[id: string]: IGameListItem
 	}
 }
 
@@ -25,22 +20,38 @@ interface IGameSeachAction {
 	payload: IGameSearchPayload
 }
 
+const initialState: IGameSliceState = {
+	queries: {},
+	resultsById: {}
+}
+
 export const gameSearchSlice = createSlice({
 	name: 'gameSearch',
 	initialState,
 	reducers: {
 		storeResults: (state, { payload }: IGameSeachAction) => {
-			const byId = {}
-			payload.results.forEach(res => {
-				;(byId as any)[res.id.toString()] = { ...res }
-			})
-			const obj = {
-				...((state as any)[payload.query] || {}),
-				resultsIds: payload.results.map(item => item.id),
-				...byId
-			}
+			type QueryKey = keyof typeof state.queries
+			const query: QueryKey = payload.query
 
-			;(state as any)[payload.query] = obj
+			const results = {}
+			payload.results.forEach(item => {
+				;(results as any)[item.id] = { ...item }
+			})
+
+			// Normalized data
+			return {
+				queries: {
+					...state.queries,
+					[query]: [
+						...(state.queries[query] || []),
+						...payload.results.map(item => item.id)
+					]
+				},
+				resultsById: {
+					...state.resultsById,
+					...results
+				}
+			}
 		}
 	}
 })
