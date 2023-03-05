@@ -8,7 +8,8 @@ const GameInfo: FC<IGameByIDRes> = ({
 	platforms = [],
 	rating,
 	name,
-	description_raw
+	description_raw,
+	website
 }) => {
 	return (
 		<section className={styles.container}>
@@ -33,6 +34,13 @@ const GameInfo: FC<IGameByIDRes> = ({
 							{rating ? rating : 'No Data'}
 						</span>
 					</p>
+					<p>
+						{website ? (
+							<a target={'_blank'} href={website}>
+								Website
+							</a>
+						) : null}
+					</p>
 				</div>
 				<div className={styles.body_content}>
 					<div className={styles.platforms_wrapper}>
@@ -42,12 +50,12 @@ const GameInfo: FC<IGameByIDRes> = ({
 								<div className={styles.platform} key={platform.platform.id}>
 									<div>
 										<p>{platform.platform.name}</p>
-										<p>{platform.released_at}</p>
 									</div>
 								</div>
 							))}
 						</div>
 					</div>
+					<h2>About</h2>
 					<p>{description_raw}</p>
 				</div>
 			</div>

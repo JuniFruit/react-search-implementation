@@ -1,5 +1,5 @@
 .wrapper {
-	@apply relative flex min-h-full flex-col gap-5 px-10;
+	@apply relative flex min-h-full flex-col gap-5 px-2;
 
 	> h2 {
 		@apply my-5 text-center text-base font-bold text-red-500;
@@ -9,5 +9,8 @@
 		@apply fixed;
 		top: 90%;
 		right: 10%;
+	}
+	@screen sm {
+		@apply px-10;
 	}
 }

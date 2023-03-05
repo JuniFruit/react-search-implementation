@@ -1,9 +1,10 @@
 .container {
-	@apply flex flex-col gap-5;
+	@apply flex flex-col gap-5 rounded-lg bg-main-800;
+	box-shadow: 0.25rem 0.25rem 1rem 1rem rgba(0, 0, 0, 0.201);
 
 	.img_container {
-		@apply overflow-hidden rounded-md;
-		width: 13rem;
+		@apply flex items-center justify-center overflow-hidden rounded-md;
+		width: 100%;
 		@screen sm {
 			min-width: 13rem;
 		}
@@ -13,7 +14,7 @@
 	}
 
 	.content_wrapper {
-		@apply flex flex-col gap-5 text-white;
+		@apply flex flex-col gap-5 px-2 py-1.5 text-white;
 
 		.head_content {
 			@apply flex flex-col gap-3;
@@ -35,5 +36,6 @@
 
 	@screen sm {
 		@apply flex-row;
+		max-height: 15rem;
 	}
 }

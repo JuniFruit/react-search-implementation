@@ -18,7 +18,7 @@ interface IVirtualize {
 const Virtualized = forwardRef<HTMLDivElement, PropsWithChildren<IVirtualize>>(
 	(
 		{
-			defaultHeight = 300,
+			defaultHeight = 350,
 			visibleOffset = 600,
 			root = null,
 			isLast = false,
@@ -59,7 +59,7 @@ const Virtualized = forwardRef<HTMLDivElement, PropsWithChildren<IVirtualize>>(
 			if (intersectionRef.current && isVisible) {
 				placeholderHeight.current = intersectionRef.current.offsetHeight
 			}
-		}, [isVisible, intersectionRef])
+		}, [isVisible, intersectionRef.current])
 
 		if (isLast) return <div ref={ref}>{children}</div>
 

@@ -1,12 +1,10 @@
 .container {
-	@apply flex w-full flex-col gap-5 py-2 px-4;
+	@apply flex w-full flex-col items-center gap-5 rounded-2xl bg-main-800 py-2 px-4;
 
 	.img_container {
 		@apply overflow-hidden rounded-md;
-		width: 13rem;
-		@screen sm {
-			min-width: 13rem;
-		}
+		width: 100%;
+
 		@screen md {
 			width: 50%;
 		}
@@ -23,10 +21,16 @@
 			> p {
 				@apply text-base font-semibold;
 			}
+			a {
+				@apply text-pink-500 transition-all duration-150 hover:text-pink-300;
+			}
 		}
 
 		.body_content {
 			@apply flex flex-col gap-2 text-white;
+			> h2 {
+				@apply my-2 text-xl font-bold;
+			}
 
 			> p {
 				word-wrap: break-word;
@@ -47,12 +51,8 @@
 				}
 			}
 		}
-		@screen sm {
+		@screen md {
 			width: 50%;
 		}
-	}
-
-	@screen sm {
-		@apply flex-row;
 	}
 }
