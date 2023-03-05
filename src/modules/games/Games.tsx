@@ -4,6 +4,7 @@ import { useGetGames } from '@/hooks/useGetGames'
 import { useTypedSelector } from '@/hooks/useTypedSelector'
 import { Button } from '@/ui/button/Button'
 import { Spinner } from '@/ui/loading/Spinner'
+import Virtualized from '@/wrapper/Virtualized'
 import { useRouter } from 'next/router'
 import { FC, useEffect } from 'react'
 import { IGameSliceState } from '../search/store/gameSearchSlice'
@@ -47,11 +48,11 @@ const Games: FC = () => {
 
 	return (
 		<section className={styles.wrapper}>
-			{storedIds.map((id, ind) => {
-				if (ind + 1 === storedIds.length)
-					return <GameListItem ref={lastElRef} id={id} key={id} />
-				return <GameListItem id={id} key={id} />
-			})}
+			{storedIds.map((id, ind) => (
+				<Virtualized isLast={ind + 1 === storedIds.length} ref={lastElRef}>
+					<GameListItem id={id} key={id} />
+				</Virtualized>
+			))}
 			{isLoading ? <Spinner /> : null}
 			{isError ? <h2>{errMsg}</h2> : null}
 			{storedIds.length ? (

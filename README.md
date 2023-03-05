@@ -15,6 +15,11 @@ React search implementation from scratch without libraries.
 - Arrow keys
 - All in one hook
 
+### Additional hooks
+
+- Infinite scroll
+- Virtualized list
+
 ### Technologies used:
 
 - React
@@ -22,7 +27,3 @@ React search implementation from scratch without libraries.
 - Typescript
 - Tailwind
 - Redux
-
-# TODO
-
-I'm planning to make reusable infinite scroll and lazy loading from scratch as well

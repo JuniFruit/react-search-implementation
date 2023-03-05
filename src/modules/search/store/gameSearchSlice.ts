@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { IGameListItem } from '@/types/rawgList.interface'
+import { IGameByIDRes, IGameListItem } from '@/types/rawgList.interface'
 import { noDuplicates } from '../utils/general'
 
 export interface IGameSliceState {
@@ -18,6 +18,11 @@ interface IGameSearchPayload {
 	query: string
 	next: number | null
 	results: IGameListItem[]
+}
+
+interface IUpdatePayload {
+	id: number
+	item: IGameByIDRes
 }
 
 interface IGameSeachAction {
@@ -59,6 +64,17 @@ export const gameSearchSlice = createSlice({
 				resultsById: {
 					...state.resultsById,
 					...results
+				}
+			}
+		},
+		updateItem: (state, action) => {
+			const payload: IUpdatePayload = action.payload
+
+			state.resultsById = {
+				...state.resultsById,
+				[payload.id]: {
+					...state.resultsById[payload.id],
+					...payload.item
 				}
 			}
 		}

@@ -1,13 +1,14 @@
-import { IGameListItem } from '@/types/rawgList.interface'
+import { IGameByIDRes } from '@/types/rawgList.interface'
 import Image from '@/ui/image/Image'
 import { FC } from 'react'
 import styles from './GameInfo.module.scss'
 
-const GameInfo: FC<IGameListItem> = ({
+const GameInfo: FC<IGameByIDRes> = ({
 	background_image,
 	platforms = [],
 	rating,
-	name
+	name,
+	description_raw
 }) => {
 	return (
 		<section className={styles.container}>
@@ -47,12 +48,7 @@ const GameInfo: FC<IGameListItem> = ({
 							))}
 						</div>
 					</div>
-					<p>
-						Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea
-						reprehenderit ratione earum, magni molestiae illo repellendus
-						quaerat atque sed laborum? Voluptatem voluptatum blanditiis
-						voluptatibus nostrum mollitia dolorum voluptate vero labore!
-					</p>
+					<p>{description_raw}</p>
 				</div>
 			</div>
 		</section>

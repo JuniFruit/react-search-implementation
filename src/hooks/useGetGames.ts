@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { useActions } from './useActions'
 
 export const useGetGames = () => {
-	const { storeResults } = useActions()
+	const { storeResults, updateItem } = useActions()
 	const [isLoading, setIsLoading] = useState(false)
 	const [isError, setIsError] = useState(false)
 	const [errMsg, setErrMsg] = useState('')
@@ -27,12 +27,31 @@ export const useGetGames = () => {
 			.finally(() => setIsLoading(false))
 	}
 
+	const fetchById = (id: number) => {
+		setIsError(false)
+		setErrMsg('')
+		setIsLoading(true)
+		RawgService.getById(id)
+			.then(res => {
+				updateItem({
+					item: res,
+					id: id
+				})
+			})
+			.catch(e => {
+				setIsError(true)
+				setErrMsg(e.message)
+			})
+			.finally(() => setIsLoading(false))
+	}
+
 	return {
 		status: {
 			isError,
 			errMsg,
 			isLoading
 		},
-		fetchGames
+		fetchGames,
+		fetchById
 	}
 }

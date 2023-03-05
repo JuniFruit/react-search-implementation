@@ -26,3 +26,8 @@ export interface IGameListItem {
 	playtime: number
 	platforms: IPlatform[]
 }
+
+export interface IGameByIDRes extends IGameListItem {
+	description_raw: string
+	website: string
+}

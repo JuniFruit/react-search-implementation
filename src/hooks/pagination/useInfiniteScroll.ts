@@ -14,7 +14,7 @@ export const useInfiniteScroll = ({
 	options = {}
 }: IUseInfiniteScroll) => {
 	const [currPage, setCurrPage] = useState<number>(startPage)
-	const lastElRef = useRef<HTMLElement>(null)
+	const lastElRef = useRef<HTMLDivElement>(null)
 
 	const fetchNext = useCallback(() => {
 		onRequestNext(currPage)
@@ -27,6 +27,7 @@ export const useInfiniteScroll = ({
 			entries.forEach(entry => {
 				if (entry.isIntersecting) {
 					fetchNext()
+					observer.disconnect()
 				}
 			})
 		}, options)
@@ -36,7 +37,7 @@ export const useInfiniteScroll = ({
 		return () => {
 			observer.disconnect()
 		}
-	}, [lastElRef.current, currPage])
+	}, [lastElRef.current, currPage, isLoading])
 
 	return {
 		lastElRef

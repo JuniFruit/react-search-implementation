@@ -1,5 +1,9 @@
 import { axiosRequest } from '@/api/axios.setup'
-import { IGameListResponse } from '@/types/rawgList.interface'
+import {
+	IGameByIDRes,
+	IGameListItem,
+	IGameListResponse
+} from '@/types/rawgList.interface'
 
 const BASE = 'https://api.rawg.io/api'
 const GAMES_LIST = 'games'
@@ -19,5 +23,13 @@ export const RawgService = {
 		)
 
 		return res
+	},
+	async getById(id: number): Promise<IGameByIDRes> {
+		const res = await axiosRequest.get(`${BASE}/${GAMES_LIST}/${id}`, {
+			params: {
+				key: process.env.NEXT_PUBLIC_RAWG_KEY
+			}
+		})
+		return res.data
 	}
 }

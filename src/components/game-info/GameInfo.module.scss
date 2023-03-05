@@ -1,5 +1,5 @@
 .container {
-	@apply flex flex-col gap-5 py-2 px-4;
+	@apply flex w-full flex-col gap-5 py-2 px-4;
 
 	.img_container {
 		@apply overflow-hidden rounded-md;
@@ -8,13 +8,13 @@
 			min-width: 13rem;
 		}
 		@screen md {
-			width: 45rem;
+			width: 50%;
 		}
 	}
 
 	.content_wrapper {
 		@apply flex flex-col gap-5 text-white;
-
+		width: 100%;
 		.head_content {
 			@apply flex flex-col gap-3;
 			> h2 {
@@ -27,6 +27,11 @@
 
 		.body_content {
 			@apply flex flex-col gap-2 text-white;
+
+			> p {
+				word-wrap: break-word;
+				width: 100%;
+			}
 			.platforms_wrapper {
 				> h2 {
 					@apply my-2 text-xl font-bold;
@@ -41,6 +46,9 @@
 					}
 				}
 			}
+		}
+		@screen sm {
+			width: 50%;
 		}
 	}
 
