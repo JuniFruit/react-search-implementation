@@ -45,11 +45,15 @@ const Games: FC = () => {
 		isLoading,
 		startPage: stored.next || 1
 	})
-
 	return (
 		<section className={styles.wrapper}>
 			{storedIds.map((id, ind) => (
-				<Virtualized isLast={ind + 1 === storedIds.length} ref={lastElRef}>
+				<Virtualized
+					key={id}
+					itemId={id}
+					isLast={ind + 1 === storedIds.length}
+					ref={lastElRef}
+				>
 					<GameListItem id={id} key={id} />
 				</Virtualized>
 			))}

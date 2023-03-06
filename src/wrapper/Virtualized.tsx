@@ -6,14 +6,19 @@ import {
 	useState
 } from 'react'
 
-const isServer = typeof window === 'undefined'
-
 interface IVirtualize {
 	defaultHeight?: number
 	visibleOffset?: number
+	itemId: number | string
 	root?: HTMLElement
 	isLast?: boolean
 }
+
+interface ISizes {
+	[id: string | number]: number
+}
+
+const sizeCache: ISizes = {}
 
 const Virtualized = forwardRef<HTMLDivElement, PropsWithChildren<IVirtualize>>(
 	(
@@ -22,6 +27,7 @@ const Virtualized = forwardRef<HTMLDivElement, PropsWithChildren<IVirtualize>>(
 			visibleOffset = 600,
 			root = null,
 			isLast = false,
+			itemId,
 			children
 		},
 		ref
@@ -58,17 +64,22 @@ const Virtualized = forwardRef<HTMLDivElement, PropsWithChildren<IVirtualize>>(
 		useEffect(() => {
 			if (intersectionRef.current && isVisible) {
 				placeholderHeight.current = intersectionRef.current.offsetHeight
+				sizeCache[itemId] = intersectionRef.current.offsetHeight
 			}
 		}, [isVisible, intersectionRef.current])
 
 		if (isLast) return <div ref={ref}>{children}</div>
-
 		return (
 			<div ref={intersectionRef}>
 				{isVisible ? (
 					<>{children}</>
 				) : (
-					<div style={{ height: placeholderHeight.current }} />
+					<div
+						style={{
+							height: `${sizeCache[itemId] || placeholderHeight.current}px`,
+							width: `100%`
+						}}
+					/>
 				)}
 			</div>
 		)

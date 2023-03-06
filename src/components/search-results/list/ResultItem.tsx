@@ -1,3 +1,4 @@
+import { useIsMobile } from '@/hooks/search/utils-hooks/useIsMobile'
 import { Button } from '@/ui/button/Button'
 import Image from '@/ui/image/Image'
 import ThumbnailTiny from '@/ui/image/thumb/ThumbnailTiny'
@@ -15,6 +16,7 @@ const ResultItem: FC<IResultItemComponent> = ({
 	isFromCache = false,
 	...rest
 }) => {
+	const { isMobile } = useIsMobile()
 	const handleDeleteCached: MouseEventHandler<HTMLButtonElement> = useCallback(
 		e => {
 			e.stopPropagation()
@@ -26,7 +28,11 @@ const ResultItem: FC<IResultItemComponent> = ({
 	return (
 		<li className={styles.item} {...{ ...rest }} tabIndex={0}>
 			<ThumbnailTiny>
-				{thumbnail ? <Image src={thumbnail} /> : <IoSearchCircleOutline />}
+				{thumbnail && !isMobile ? (
+					<Image src={thumbnail} />
+				) : (
+					<IoSearchCircleOutline />
+				)}
 			</ThumbnailTiny>
 			<div className={styles.text_wrapper}>
 				<h3>{value}</h3>
